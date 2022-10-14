@@ -46,28 +46,30 @@
             android:text="MIKEDROP"
             android:layout_width="401dp"
             android:layout_height="50dp" android:id="@+id/header"
-            android:background="#E4D64F" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintEnd_toEndOf="parent"
-            android:textAlignment="center" android:textSize="48sp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="673dp" android:layout_marginStart="5dp" android:layout_marginEnd="2dp"
-            app:layout_constraintVertical_bias="1.0"/>
+            android:background="#E4D64F"
+            android:textAlignment="center" android:textSize="48sp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="58dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="623dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="5dp" android:layout_marginEnd="5dp" app:layout_constraintEnd_toEndOf="parent"/>
     <TextView
             android:text="Select an option"
             android:layout_width="413dp"
             android:layout_height="81dp" android:id="@+id/footer"
             android:background="#E4D64F" android:textAlignment="center"
-            android:textSize="48sp" app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="654dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:textSize="48sp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="634dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
     <TextView
             android:text="output"
             android:layout_width="333dp"
             android:layout_height="30dp" android:id="@+id/message"
             android:textAlignment="center" android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="602dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="99dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="48dp"
-            android:layout_marginEnd="30dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="573dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="128dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="39dp" android:layout_marginEnd="39dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
