@@ -1,6 +1,8 @@
 package com.example.mikedrop;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,7 +33,7 @@ public class MikedropActivity extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                output.setText("Map Button Clicked");
+                startActivity(new Intent(MikedropActivity.this, MapsActivity.class));
             }
         });
 
@@ -52,7 +54,7 @@ public class MikedropActivity extends AppCompatActivity {
         diningButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                output.setText("Dining Button Clicked");
+                startActivity(new Intent(MikedropActivity.this, DiningActivity.class));
             }
         });
     }
