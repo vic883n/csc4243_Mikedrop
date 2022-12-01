@@ -2,7 +2,13 @@ package com.example.mikedrop;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.renderscript.Element;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,14 +18,30 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.mikedrop.databinding.ActivityMapsBinding;
 
+import kotlinx.coroutines.channels.BroadcastChannel;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+    private BroadcastReceiver bcr = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("gotothisfuckinglocation")){
+//            TODO: we do some shit with the map
+                Log.i(TAG, "onReceive: ");
+            }
+        }
+    };
+
+    public MapsActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getApplicationContext().registerReceiver(bcr, new IntentFilter("gotothisfuckinglocation"));
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -28,6 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     /**

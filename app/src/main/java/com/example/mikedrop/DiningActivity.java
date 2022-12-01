@@ -1,6 +1,9 @@
 package com.example.mikedrop;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -148,12 +151,17 @@ class MapResultArrayAdapter extends BaseAdapter {
         Restaurants restaurant = getItem(position);
         
         nameView.setText(restaurant.getName() + "\n" + restaurant.getAddress());
-
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "onClick: " + restaurant.getLat());
                 Log.e(TAG, "onClick: " + restaurant.getLon());
+
+                Intent intent = new Intent("gotothisfuckinglocation");
+                intent.putExtra("long", restaurant.getLon());
+                intent.putExtra("lat", restaurant.getLat());
+
+                startActivity(context, intent, null);
             }
         });
         return convertView;
