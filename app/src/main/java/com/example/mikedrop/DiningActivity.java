@@ -1,10 +1,18 @@
 package com.example.mikedrop;
 
+import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.libraries.places.api.Places;
@@ -14,6 +22,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,7 +35,7 @@ public class DiningActivity extends AppCompatActivity {
 //  get restaurants with places api
 //  TODO:I need to know how to return a list from another thread in run()
 
-    private void updateResterauntList(ArrayAdapter<Restaurants> adapter) {
+    private void updateResterauntList(MapResultArrayAdapter adapter) {
         final String API_KEY = BuildConfig.API_KEY;
         final double lat = 30.407770339447527;
         final double lon = -91.17940238659425;
@@ -74,7 +83,9 @@ public class DiningActivity extends AppCompatActivity {
                             JSONObject result = json.getJSONArray("results").getJSONObject(i);
                             String name = result.getString("name");
                             String address = result.getString("vicinity");
-                            adapter.add(new Restaurants(name, address));
+                            double lon = result.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
+                            double lat = result.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
+                            adapter.add(new Restaurants(name, address, lon, lat));
                         }
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
@@ -90,9 +101,61 @@ public class DiningActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dining);
 
-        ArrayAdapter<Restaurants> adapter = new ArrayAdapter<>(this, R.layout.restaurant_card, new LinkedList<>());
+        MapResultArrayAdapter adapter = new MapResultArrayAdapter(this, R.layout.restaurant_card);
         updateResterauntList(adapter);
         ListView listView = findViewById(R.id.restaurant_list);
         listView.setAdapter(adapter);
+    }
+}
+
+class MapResultArrayAdapter extends BaseAdapter {
+    private static final String TAG = "dickbutt";
+    private List<Restaurants> dataset = new LinkedList<>();
+    private Context context;
+    private int resource;
+
+    public MapResultArrayAdapter(@NonNull Context context, int resource) {
+        this.context = context;
+        this.resource = resource;
+    }
+    
+    public void add(Restaurants item){
+        dataset.add(item);
+    }
+    
+    @Override
+    public int getCount() {
+        return dataset.size();
+    }
+
+    @Override
+    public Restaurants getItem(int position) {
+        return dataset.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return dataset.get(position).hashCode();
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(resource, parent, false);
+        }
+        TextView nameView = convertView.findViewById(R.id.label);
+        Restaurants restaurant = getItem(position);
+        
+        nameView.setText(restaurant.getName() + "\n" + restaurant.getAddress());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "onClick: " + restaurant.getLat());
+                Log.e(TAG, "onClick: " + restaurant.getLon());
+            }
+        });
+        return convertView;
     }
 }
