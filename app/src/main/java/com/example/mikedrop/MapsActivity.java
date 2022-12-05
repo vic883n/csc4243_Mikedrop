@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.renderscript.Element;
 import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.mikedrop.databinding.ActivityMapsBinding;
@@ -25,23 +27,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    private BroadcastReceiver bcr = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("gotothisfuckinglocation")){
-//            TODO: we do some shit with the map
-                Log.i(TAG, "onReceive: ");
-            }
-        }
-    };
+    private double lat = 30.407770339447527d;
+    private double lon = -91.17940238659425d;
+    private String markerName = "Patrick F. Taylor";
 
     public MapsActivity() {
+        Log.i(TAG, "MapsActivity: ");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getApplicationContext().registerReceiver(bcr, new IntentFilter("gotothisfuckinglocation"));
+        Intent intent = getIntent();
+        if (intent != null) {
+            Log.i(TAG, "onCreate: something started this application");
+            lon = intent.getDoubleExtra("long", -91.17940238659425d);
+            lat = intent.getDoubleExtra("lat", 30.407770339447527d);
+            markerName = intent.getStringExtra("markerName");
+
+            //-91.17940238659425    30.407770339447527
+            //We need map here
+        }
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -67,9 +73,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng pft = new LatLng(30.407770339447527, -91.17940238659425);
-        mMap.addMarker(new MarkerOptions().position(pft).title("Patrick F. Taylor"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pft));
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(19));
+        LatLng centerMarker = new LatLng(lat, lon);
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(centerMarker, 17f, 0f, 90f)));
+        mMap.addMarker(new MarkerOptions().position(centerMarker).title(markerName));
+        Log.i(TAG, "onMapReady: " + mMap.getCameraPosition().target.toString());
     }
 }

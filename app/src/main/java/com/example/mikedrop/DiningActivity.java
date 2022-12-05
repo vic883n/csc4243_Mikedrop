@@ -160,6 +160,7 @@ class MapResultArrayAdapter extends BaseAdapter {
                 Intent intent = new Intent("gotothisfuckinglocation");
                 intent.putExtra("long", restaurant.getLon());
                 intent.putExtra("lat", restaurant.getLat());
+                intent.putExtra("markerName", restaurant.getName());
 
                 startActivity(context, intent, null);
             }
