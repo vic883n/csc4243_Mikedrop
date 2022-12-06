@@ -3,6 +3,7 @@ package com.example.mikedrop;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,7 +48,10 @@ public class MikedropActivity extends AppCompatActivity {
         eventsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                output.setText("Events Button Clicked");
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                String url = "https://calendar.lsu.edu/";
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
             }
         });
 
