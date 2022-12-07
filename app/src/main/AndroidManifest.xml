@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mikedrop">
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mikedrop"
         tools:targetApi="31">
-
         <activity
             android:name=".DiningActivity"
             android:exported="false"
@@ -26,8 +25,16 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".DiningContainer"
+            android:exported="false"
+            android:theme="@style/Theme.Mikedrop.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
-    <meta-data
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAcDD9DlrZks9v9SPV4Lb_6OhbkBBlkCTo" />
 
@@ -40,17 +47,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps">
             <intent-filter>
+
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MapsContainer"
+            android:exported="true">
+            <intent-filter>
                 <action android:name="gotothisfuckinglocation" />
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
     </application>
 
